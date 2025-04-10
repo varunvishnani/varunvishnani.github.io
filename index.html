@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varun Vishnani - Data Science Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light Theme Colors */
+            --primary: #ffffff; /* White background */
+            --secondary: #f4f7f6; /* Very light gray for cards/sections */
+            --highlight: #007bff; /* A nice blue for highlight */
+            --text: #333333; /* Dark gray for main text */
+            --text-secondary: #555555; /* Medium gray for secondary text */
+            --border-color: #e0e0e0; /* Light border color */
+            --shadow-color: rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            /* Light header background with blur */
+            background-color: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(10px);
+            transition: 0.3s ease;
+            border-bottom: 1px solid transparent; /* Add border for scrolled state */
+        }
+        
+        .scrolled {
+            padding: 15px 50px;
+            /* Light shadow for scrolled header */
+            box-shadow: 0 5px 15px var(--shadow-color); 
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--highlight);
+            text-decoration: none;
+        }
+
+        /* ... Keep existing nav styles ... */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--text); /* Use main text color */
+            text-decoration: none;
+            font-size: 16px;
+            position: relative;
+            padding: 5px 0;
+            transition: 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--highlight);
+        }
+        
+        nav ul li a::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--highlight);
+            transition: 0.3s ease;
+        }
+        
+        nav ul li a:hover::before {
+            width: 100%;
+        }
+        /* ... End of nav styles ... */
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 150px;
+        }
+        
+        .hero-greeting {
+            color: var(--highlight);
+            font-family: monospace;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 80px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            color: var(--text); /* Ensure heading uses main text color */
+        }
+        
+        .hero h2 {
+            font-size: 60px;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+        
+        .hero-desc {
+            max-width: 500px;
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+        
+        .button {
+            background-color: transparent;
+            color: var(--highlight);
+            border: 1px solid var(--highlight);
+            border-radius: 4px;
+            padding: 15px 25px;
+            font-size: 14px;
+            font-family: monospace;
+            cursor: pointer;
+            transition: 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            /* Slightly darker blue background on hover */
+            background-color: rgba(0, 123, 255, 0.1); 
+            transform: translateY(-3px);
+        }
+        
+        section {
+            padding: 100px 150px;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            font-size: 28px;
+            color: var(--text); /* Use main text color */
+        }
+        
+        .section-title::after {
+            content: "";
+            display: block;
+            height: 1px;
+            width: 300px;
+            background-color: var(--border-color); /* Use border color for line */
+            margin-left: 20px;
+            opacity: 1; /* Make it solid */
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .skills li {
+            position: relative;
+            padding-left: 20px;
+            font-family: monospace;
+            color: var(--text-secondary);
+        }
+        
+        .skills li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--highlight);
+        }
+        
+        .profile-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            filter: none; /* Remove grayscale for light theme */
+            transition: 0.3s ease;
+            z-index: 1;
+            position: relative;
+            border: 1px solid var(--border-color); /* Add subtle border */
+        }
+        
+        .profile-img:hover {
+             transform: scale(1.03); /* Add slight zoom on hover */
+        }
+        
+        .profile-img-border {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--highlight);
+            border-radius: 5px;
+            z-index: 0;
+            transition: 0.3s ease;
+        }
+        
+        .profile-container:hover .profile-img-border {
+            top: 10px;
+            left: 10px;
+        }
+        
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .experience-card {
+            background-color: var(--secondary); /* Use light secondary background */
+            padding: 25px;
+            border-radius: 5px;
+            position: relative;
+            transition: 0.3s ease;
+            border: 1px solid var(--border-color); /* Add subtle border */
+            box-shadow: 0 5px 15px var(--shadow-color); /* Add subtle shadow */
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--shadow-color); /* Enhance shadow on hover */
+        }
+        
+        .folder-icon {
+            color: var(--highlight);
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .exp-title {
+            margin-bottom: 11px;
+            font-size: 22px;
+            color: var(--text); /* Use main text color */
+        }
+        
+        .exp-desc {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .exp-tools {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .exp-tools li {
+            margin-right: 15px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .contact {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-title {
+            color: var(--highlight);
+            font-family: monospace;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-heading {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: var(--text); /* Use main text color */
+        }
+        
+        .contact-text {
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+        }
+        
+        .social-links {
+            position: fixed;
+            bottom: 0;
+            left: 40px;
+            right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .social-links ul {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+        }
+        
+        .social-links li {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 22px;
+            transition: 0.3s ease;
+            display: inline-block; /* Needed for transform */
+        }
+        
+        .social-links a:hover {
+            color: var(--highlight);
+            transform: translateY(-3px);
+        }
+        
+        .social-links::after {
+            content: "";
+            display: block;
+            width: 1px;
+            height: 90px;
+            background-color: var(--text-secondary); /* Use secondary text color for line */
+            margin: 0 auto;
+        }
+        
+        .email-link {
+            position: fixed;
+            bottom: 0;
+            right: 40px;
+            left: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .email-link a {
+            writing-mode: vertical-rl;
+            color: var(--text-secondary);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            font-family: monospace;
+            transition: 0.3s ease;
+            display: inline-block; /* Needed for transform */
+        }
+        
+        .email-link a:hover {
+            color: var(--highlight);
+            transform: translateY(-3px); /* Adjust vertical transform */
+        }
+        
+        .email-link::after {
+            content: "";
+            display: block;
+            width: 1px;
+            height: 90px;
+            background-color: var(--text-secondary); /* Use secondary text color for line */
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+        
+        footer {
+            padding: 20px 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid var(--border-color); /* Add top border */
+            margin-top: 50px; /* Add some space before footer */
+        }
+        
+        footer a {
+            color: var(--highlight);
+            text-decoration: none;
+        }
+
+        /* Data visualization section */
+        .data-viz {
+            background-color: var(--secondary); /* Use light secondary background */
+            padding: 40px;
+            border-radius: 5px;
+            margin-top: 40px;
+            border: 1px solid var(--border-color); /* Add subtle border */
+        }
+
+        .data-viz h3 {
+             color: var(--text); /* Use main text color */
+             margin-bottom: 10px;
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+            margin-top: 30px;
+            border-bottom: 1px solid var(--border-color); /* Add base line for chart */
+            padding-bottom: 40px; /* Space for labels */
+        }
+        
+        .chart-bar {
+            position: absolute;
+            bottom: 40px; /* Adjust position based on padding */
+            width: 40px;
+            background-color: var(--highlight);
+            transition: height 1s ease, background-color 0.3s ease; /* Add background transition */
+            opacity: 0.8; /* Slightly more opaque */
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .chart-bar:hover {
+            opacity: 1;
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: 10px; /* Position below baseline */
+            text-align: center;
+            width: 40px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            width: 40px;
+            text-align: center;
+            color: var(--highlight);
+            font-weight: bold;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-bar:hover + .chart-label + .chart-value, /* Show value on bar hover */
+        .chart-container:hover .chart-value { /* Or show all values on container hover (optional) */
+             opacity: 1;
+        }
+        
+        /* ... Keep existing @media queries ... */
+        @media (max-width: 1080px) {
+            .hero {
+                padding: 0 100px;
+            }
+            
+            section {
+                padding: 80px 100px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px; /* Adjust padding */
+            }
+            .scrolled {
+                padding: 10px 20px; /* Adjust padding */
+            }
+            nav ul li {
+                margin-left: 15px; /* Reduce nav spacing */
+            }
+            .hero {
+                padding: 0 50px;
+            }
+            
+            section {
+                padding: 60px 50px;
+            }
+            
+            .hero h1 {
+                font-size: 50px;
+            }
+            
+            .hero h2 {
+                font-size: 30px;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-container {
+                margin: 20px auto; /* Adjust margin */
+                width: 250px; /* Slightly smaller */
+                height: 250px;
+            }
+            
+            .social-links, .email-link {
+                display: none;
+            }
+             .section-title::after {
+                width: 150px; /* Shorter line on smaller screens */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px; /* Adjust base font size */
+            }
+            .hero {
+                padding: 0 25px;
+            }
+            
+            section {
+                padding: 40px 25px;
+            }
+             .hero h1 {
+                font-size: 40px;
+            }
+            
+            .hero h2 {
+                font-size: 24px;
+            }
+             .section-title {
+                font-size: 24px;
+            }
+             .section-title::after {
+                width: 80px; /* Even shorter line */
+            }
+             .experience-grid {
+                grid-template-columns: 1fr; /* Stack cards */
+            }
+        }
+        
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- ... Your existing HTML body content ... -->
+    <header id="header">
+        <a href="#" class="logo">VV.Portfolio</a>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <p class="hero-greeting fade-in">Hi, my name is</p>
+            <h1 class="fade-in">Varun Vishnani.</h1>
+            <h2 class="fade-in">I turn data into insights.</h2>
+            <p class="hero-desc fade-in">I'm a Senior Data Scientist at Amazon with over a decade of industry experience. I specialize in building machine learning models and AI solutions that help businesses make data-driven decisions.</p>
+            <a href="#contact" class="button fade-in">Get In Touch</a>
+        </section>
+        
+        <section id="about" class="fade-in">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Data scientist with experience across diverse domains in the retail sector. A wide spectrum of skills acquired on the job, ranging from managing client operations to heading technical projects have enabled me to approach problems systematically and drive quality-centric process flows efficiently.</p>
+                    <p>Proficiency in technologies like Python, R, SAS, VBA, Java, Tableau, etc., with current focus on building ML-based solutions to solve complex problems.</p>
+                    <p>Here are a few technologies I've been working with recently:</p>
+                    <ul class="skills">
+                        <li>Python</li>
+                        <li>R</li>
+                        <li>SAS</li>
+                        <li>VBA</li>
+                        <li>Java</li>
+                        <li>Tableau</li>
+                        <li>Machine Learning</li>
+                        <li>Data Visualization</li>
+                    </ul>
+                </div>
+                <div class="profile-container">
+                    <img class="profile-img" src="/api/placeholder/300/300" alt="Varun Vishnani Profile">
+                    <div class="profile-img-border"></div>
+                </div>
+            </div>
+            
+            <div class="data-viz fade-in">
+                <h3>My Skills Distribution</h3>
+                <div class="chart-container" id="skillsChart">
+                    <!-- Chart will be generated with JS -->
+                </div>
+            </div>
+        </section>
+        
+        <section id="experience" class="fade-in">
+            <h2 class="section-title">Where I've Worked</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="exp-title">Senior Data Scientist</h3>
+                    <p class="exp-desc">Leading data science initiatives at Amazon, focusing on customer behavior prediction and recommendation systems for the retail sector.</p>
+                    <ul class="exp-tools">
+                        <li>Python</li>
+                        <li>ML</li>
+                        <li>Retail Analytics</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="exp-title">Technical Project Lead</h3>
+                    <p class="exp-desc">Headed technical projects, implementing systematic approaches to drive quality-centric process flows in data-driven environments.</p>
+                    <ul class="exp-tools">
+                        <li>Project Management</li>
+                        <li>Process Optimization</li>
+                        <li>Team Leadership</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="exp-title">Client Operations Manager</h3>
+                    <p class="exp-desc">Managed client operations, analyzing operational data to identify trends and patterns, providing actionable insights to stakeholders.</p>
+                    <ul class="exp-tools">
+                        <li>Data Analysis</li>
+                        <li>Client Management</li>
+                        <li>Operational Excellence</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" class="fade-in">
+            <h2 class="section-title">Some Things I've Built</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="exp-title">Retail Recommendation Engine</h3>
+                    <p class="exp-desc">A machine learning based recommendation system that increased customer engagement by 25% for retail product discovery.</p>
+                    <ul class="exp-tools">
+                        <li>Python</li>
+                        <li>ML Algorithms</li>
+                        <li>Retail Data</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="exp-title">Demand Forecasting System</h3>
+                    <p class="exp-desc">An interactive dashboard for sales forecasting with 90% accuracy using time series analysis for retail inventory management.</p>
+                    <ul class="exp-tools">
+                        <li>R</li>
+                        <li>Time Series</li>
+                        <li>Tableau</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="exp-title">Customer Sentiment Analysis</h3>
+                    <p class="exp-desc">Developed an NLP-based tool to analyze customer reviews and feedback in the retail space, identifying key improvement areas.</p>
+                    <ul class="exp-tools">
+                        <li>Python</li>
+                        <li>NLP</li>
+                        <li>Sentiment Analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="fade-in">
+            <div class="contact">
+                <p class="contact-title">What's Next?</p>
+                <h2 class="contact-heading">Get In Touch</h2>
+                <p class="contact-text">I'm currently open to new opportunities and collaborations. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
+                <a href="mailto:your.email@example.com" class="button">Say Hello</a>
+            </div>
+        </section>
+    </main>
+    
+    <div class="social-links">
+        <ul>
+            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a></li>
+            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-kaggle"></i></a></li>
+        </ul>
+    </div>
+    
+    <div class="email-link">
+        <a href="mailto:your.email@example.com">your.email@example.com</a>
+    </div>
+    
+    <footer>
+        <p>Designed & Built by <a href="#">Varun Vishnani</a></p>
+    </footer>
+    
+    <script>
+        // Scroll header effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Intersection Observer for fade-in animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        fadeElements.forEach(element => {
+            observer.observe(element);
+            // Add staggered delay for hero section
+            if (element.closest('.hero')) {
+                const index = Array.from(element.parentNode.children).indexOf(element);
+                element.style.transitionDelay = `${index * 0.1}s`;
+            }
+        });
+        
+        // Generate skills chart
+        const skills = [
+            { name: 'Python', value: 95 },
+            { name: 'R', value: 90 },
+            { name: 'ML', value: 92 },
+            { name: 'SAS', value: 85 },
+            { name: 'Java', value: 80 },
+            { name: 'VBA', value: 88 },
+            { name: 'Tableau', value: 85 }
+        ];
+        
+        const chartContainer = document.getElementById('skillsChart');
+        const barWidth = 40;
+        const barMargin = 20;
+        let barLeft = 0;
+        
+        skills.forEach(skill => {
+            const bar = document.createElement('div');
+            bar.className = 'chart-bar';
+            bar.style.left = `${barLeft}px`;
+            bar.style.height = '0'; // Start at 0 for animation
+            
+            const label = document.createElement('div');
+            label.className = 'chart-label';
+            label.textContent = skill.name;
+            label.style.left = `${barLeft}px`;
+            
+            const value = document.createElement('div');
+            value.className = 'chart-value';
+            value.textContent = `${skill.value}%`;
+            value.style.left = `${barLeft}px`;
+            
+            chartContainer.appendChild(bar);
+            chartContainer.appendChild(label);
+            chartContainer.appendChild(value);
+            
+            barLeft += barWidth + barMargin;
+            
+            // Animate bars when visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            // Adjust height multiplier if needed based on container height
+                            bar.style.height = `${skill.value * 2.0}px`; 
+                        }, 300); 
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(chartContainer);
+        });
+    </script>
+</body>
+</html>
